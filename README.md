@@ -1,4 +1,40 @@
-<p align="center"><b>English</b> · <a href=".github/readme/README.es.md">Español</a> · <a href=".github/readme/README.fr.md">Français</a> · <a href=".github/readme/README.it.md">Italiano</a> · <a href=".github/readme/README.zh-CN.md">简体中文</a> · <a href=".github/readme/README.ko.md">한국어</a> · <a href=".github/readme/README.ja.md">日本語</a> · <a href=".github/readme/README.hi.md">हिन्दी</a> · <a href=".github/readme/README.ar.md">العربية</a> · <a href=".github/readme/README.ru.md">Русский</a> · <a href=".github/readme/LANGUAGES.md">More languages</a></p>
+> [!IMPORTANT]
+> **This is a fork: HolyArrs API Connector – an evaluation.**
+> It evaluates whether a self-hosted media server can use HolyArrs as its search and download service, through a connector.
+> Communication happens only over APIs; no code of the media server is part of this repository.
+>
+> - **Status:** evaluation only. Nothing here is ready for use, and the outcome is open.
+> - **Original project:** [HolyArrs/HolyArrs](https://github.com/HolyArrs/HolyArrs) by [CoderLuii](https://github.com/CoderLuii).
+> - **Licence:** like the original, this fork is licensed under the [GNU AGPL-3.0](LICENSE).
+> - **Support:** please do not report issues of this fork to the HolyArrs project.
+
+## About this fork
+
+The media server already has its own search service and a defined search-service interface. The media server decides *what* it wants (titles to watch for, quality, languages); the search service finds and downloads releases for it. This fork evaluates whether that own search service should be dropped and HolyArrs connected in its place.
+
+The idea under evaluation is a **connector in front of HolyArrs**:
+
+    Media server  ⇄  Connector (REST or gRPC)  ⇄  HolyArrs backend (JSON API)  ⇄  indexers, downloaders
+
+- **Towards the media server**, the connector would speak its existing search-service interface, either over **REST** or over **gRPC**: watch requests, searches, found releases, download states and finished imports.
+- **Towards HolyArrs**, it would drive the existing backend through its JSON API: Sources, Pick rules, downloaders and the download queue.
+- HolyArrs would keep doing what it does best (Sources, Pick rules, downloaders). Its web interface is not needed for this, but stays untouched.
+- The HolyArrs JSON API is built for its own web app and may change between releases. A connector would therefore name the HolyArrs versions it has been tested with.
+
+**Question to answer:** can HolyArrs replace the media server's own search service and bring more indexers and downloaders (any Torznab/Newznab source, Prowlarr, Jackett; qBittorrent, SABnzbd, NZBGet and others), without changing how HolyArrs works? If the answer is no, the media server keeps its own search service.
+
+**The evaluation looks at:**
+
+- **Coverage:** can every function of the existing search-service interface be mapped onto HolyArrs?
+- **Stability:** how much does the HolyArrs JSON API change between releases?
+- **Effort and resources:** building and running the connector plus HolyArrs, compared with the own search service.
+- **Release quality:** does HolyArrs pick releases as well as the own search service (quality, languages, edge cases)?
+
+---
+
+*The original HolyArrs README follows below, unchanged.*
+
+---
 
 <p align="center">
   <picture>
